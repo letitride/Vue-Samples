@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<style>
+    .frame {
+      border-style: solid;
+      padding: 10px;
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div id="app1" class="frame">
+  <h1>{{h1title}}</h1>
+  <button name="myBtn" v-on:Click="h1title='イベントの学習';message='on click'">click</button>
+  <button name="myMethodBtn" v-on:Click="modTiitle">mod title</button>
+  <span>{{message}}</span>
+  <span>{{messageLength()}}</span>
+  <div><input type="text" name="message" v-model="message"></div>
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    h1title: 'Vue.jsの学習',
+    message: 'no event'
+  },
+  methods: {
+    modTiitle: function(){
+      this.h1title = "execute method"
+      this.message = "reset"
+    },
+    messageLength: function(){
+      return this.message.length
+    }
+  }
+})
+  </script>
+</body>
+</html>
