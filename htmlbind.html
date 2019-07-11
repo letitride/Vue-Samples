@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<style>
+    .frame {
+      border-style: solid;
+      padding: 10px;
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div id="app1" class="frame">
+  <h2><a v-bind:href="yahooURL">yahooへ</a></h2>
+  <h2><a :href="yahooURL">v-vindを省略しても等価</a></h2>
+  <h2><img :src="imageURL" height="100"></h2>
+  <h2><img v-bind="imageAttributes" /><button name="chnge" v-on:click="changeSize()">サイズを変更</button></h2>
+
+</div>
+<script>
+const imageURL = "https://assets.media-platform.com/gizmodo/dist/images/2015/09/150902ngooglenewlogo-w1280.jpg";
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    yahooURL: "http://yahoo.co.jp/",
+    imageURL: imageURL,
+    imageAttributes:{
+      src: imageURL,
+      height: 100
+    }
+  },
+  methods: {
+    changeSize: function(){
+      this.imageAttributes.height += 30;
+    }
+  }
+})
+</script>
+</body>
+</html>
