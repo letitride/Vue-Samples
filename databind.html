@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<style>
+    .frame {
+      border-style: solid;
+      padding: 10px;
+      margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div id="app1" class="frame">
+  <h1>{{tel.split(',').join('-')}}</h1>
+  <h2>{{ new Date() }}</h2>
+  <h2>{{ dontSync }}</h2>
+  <h2>{{ array }}</h2>
+  <h2>{{ obj }}</h2>
+  <h2>{{ once }}</h2>
+  <h2 v-once>{{ once }}</h2>
+  <h2>{{ htmlText }}</h2>
+  <h2 v-html="htmlText"></h2>
+  <h2 v-pre>{{ preData }}</h2>
+
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    tel: '00,0000,0000',
+    sync: '',
+    array: [1,2,3],
+    obj: {key: "value"},
+    once: 'bind data',
+    htmlText: '<span style="color:red">escape entity</span>',
+    preData: 'pre data'
+  }
+})
+app1.dontSync = "default";
+app1.sync = "ok";
+app1.once = "change data";
+
+  </script>
+</body>
+</html>
