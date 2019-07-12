@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<style>
+    .frame {
+      border-style: solid;
+      padding: 10px;
+      margin: 10px;
+    }
+    .warn{
+      color:red;
+    }
+    .warn-fontsize{
+      font-size: 5em;
+    }
+</style>
+</head>
+<body>
+<div id="app1" class="frame">
+    <h2 v-bind:style="{color:titleFontColor, backgroundColor:h2Color}">Title</h2>
+    <h2 v-bind:style="{color:titleFontColor, 'background-color':h2Color}">Title</h2>
+    <h2 v-bind:style="h2Style">Title</a></h2>
+    <h2 v-bind:style="[h2Style,addStyle]">Title</h2>
+    <h2 v-bind:class="{warn:true, 'warn-fontsize':true }">Title</h2>
+    <h2 v-bind:class="{warn:true, 'warn-fontsize':false }">Title</h2>
+    <h2 v-bind:class="[warnClass, warnFontsizeClass]">Title</h2>
+
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    titleFontColor: "red",
+    h2Color:"blue",
+    h2Style:{
+      color:"yellow",
+      backgroundColor:"black"
+    },
+    addStyle:{
+      fontSize:"100px"
+    },
+    warnClass:"warn",
+    warnFontsizeClass:"warn-fontsize"
+  }
+});
+</script>
+</body>
+</html>
