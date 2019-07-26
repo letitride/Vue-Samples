@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+<div id="app1" class="frame">
+  <h2>立方体の体積:1辺の長さ{{ side }}の体積は、{{ side**3 }} </h2>
+  <h2>computedで計算:1辺の長さ{{ side }}の体積は、{{ volume }} </h2>
+  <h2>体積は、{{ is50Over }} です</h2>
+
+  <h2>methodsで計算:1辺の長さ{{ side }}の面積は、{{ area() }} </h2>
+  <h2>computedで表示:{{ computedDate }} </h2>
+  <h2>methodsで表示:{{ methodsDate() }} </h2>
+  <input name="arg" type="text" v-model="arg" />
+  <p>{{arg}}</p>
+  <input name="book" type="text" v-model="book" />
+  <p>{{newValue}}</p>
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    side: 5,
+    arg: "",
+    newValue: "default"
+  },
+  computed: {
+    volume: function(){
+      return this.side**3
+    },
+    is50Over: function(){
+        if( this.volume >= 50 ){
+          return "50以上";
+        }
+        return "50未満"
+    },
+    computedDate: function(){
+      return new Date().toLocaleString();
+    },
+    book: {
+      get: function(){
+        return "Vue.js"
+      },
+      set: function(value){
+        this.newValue = value + "が入力されました"
+      }
+    }
+  },
+  methods: {
+    area: function(){
+      return this.side**2
+    },
+    methodsDate: function(){
+      return new Date().toLocaleString();
+    }
+  }
+});
+</script>
+</body>
+</html>
