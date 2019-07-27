@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+<div id="app1" class="frame">
+<h2>v-forサンプル</h2>
+<p>1から12月までを出力します</p>
+  <button v-on:click="modify">1月を英語に変更</button>
+  <ul>
+  <li v-for="month in monthList">{{month}}月</li>
+  </ul>
+<ul>
+  <li v-for="(month, index) in monthList">{{index}}番目:{{month}}月</li>
+</ul>
+<ul>
+  <li v-for="(value, key) in user">{{key}}の値は{{value}}です</li>
+</ul>
+<ul v-for="(user, index) in users">
+  <li>{{index}}:番目 {{user.name}} </li>
+  <li>{{index}}:番目 {{user.level}} </li>
+  <li>{{index}}:番目 {{user.created_at}} </li>
+</ul>
+<ul v-for="(user, index) in users" v-if="user.level >= 20">
+  <li>{{index}}:番目 {{user.name}} </li>
+  <li>{{index}}:番目 {{user.level}} </li>
+  <li>{{index}}:番目 {{user.created_at}} </li>
+</ul>
+<ul v-for="(user, index) in under20LevelOrderAsc">
+  <li>{{index}}:番目 {{user.name}} </li>
+  <li>{{index}}:番目 {{user.level}} </li>
+  <li>{{index}}:番目 {{user.created_at}} </li>
+</ul>
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    monthList: [1,2,3,4,5,6,7,8,9,10,11,12],
+    user: { name:"hoge", level:12, created_at:"2019-07-25" },
+    users: [
+      { name:"hoge", level:12, created_at:"2019-07-25" },
+      { name:"foo",  level:28, created_at:"2018-05-21" },
+      { name:"bar",  level:8, created_at:"2019-07-26" }
+    ]
+  },
+  computed:{
+    under20LevelOrderAsc: function(){
+      var users = this.users.filter( function(user){
+        return user.level < 20;
+      });
+      return users.sort( function(a, b){
+        return a.level - b.level;
+      });
+    }
+  },
+  methods: {
+    modify: function(){
+      Vue.set( this.monthList, 0, "January");
+    }
+  }
+});
+</script>
+</body>
+</html>
