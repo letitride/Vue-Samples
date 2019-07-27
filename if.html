@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+<div id="app1" class="frame">
+  <h2 v-if="show">v-ifのサンプル</h2>
+  <h2 v-show="show">v-showのサンプル</h2>
+  <template v-if="show">
+      <h2>v-ifテスト</h2>
+      <p>templateタグで纏める</p>
+  </template>
+  <button v-on:click="show = !show">タイトルを{{buttonLabel}}</button>
+  <h2 v-show="arg == 'default'">変更なし</h2>
+  <h2 v-else-if="arg == 'fix'">fixと入力</h2>
+  <h2 v-else="arg">fix以外に変更</h2>
+  <input type="text" name="arg" v-model="arg">
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    show: true,
+    arg:"default"
+  },
+  computed: {
+    buttonLabel: function(){
+      if(!this.show){
+        return "表示";
+      }
+      return "非表示";
+    }
+  }
+});
+</script>
+</body>
+</html>
