@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<style>
+    .hideDate {
+      background-color: blueviolet;
+      color: white;
+      width: 300px;
+      padding: 10px;
+      margin: 10px;
+    }
+    .parentArea{
+      width: 100%;
+      height: 300px;
+      background-color: wheat;
+      position: relative;
+    }
+    .moveBox {
+      border-style: solid;
+      background-color: cadetblue;
+      width: 150px;
+      height: 150px;
+    }
+</style>
+</head>
+<body>
+<div id="app1" class="frame">
+<h1>イベントハンドラ</h1>
+<input type="text" name="textData" v-model="textData"><button name="send" v-on:click="addData">送信</button>
+<input type="text" name="textData" v-model="textData"><button name="send" v-on:click.once="addData">一度だけ送信</button>
+<input type="text" name="textData" v-model="argValue"><button name="send" v-on:click="var up = argValue.toUpperCase();addValue(up)">大文字にして送信</button>
+<ul>
+  <li v-for="item in listData">{{item}}</li>
+</ul>
+<div class="hideDate" v-on:mouseover="showDate" v-on:mouseout="currentDate = '';">今日は何月何日？</div><p>{{currentDate}}</p>
+
+<button name="event" v-on:click="eventDump">引数なしイベント情報</button>
+<button name="event" v-on:click="eventDumpAndArg('test', $event)">引数ありイベント情報</button>
+
+<div class="parentArea" v-on:click="move">
+  <div class="moveBox" v-bind:style="boxPosition"></div>
+</div>
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    argValue: "",
+    textData: "",
+    listData: [],
+    currentDate: "",
+    eventInfo: "",
+    boxPosition: {
+      position: "absolute", left: "0px", top: "0px", transition: "all 1s"
+    }
+  },
+  computed:{
+  },
+  methods: {
+    addData: function(){
+      this.listData.unshift( this.textData );
+      this.textData = "";
+    },
+    addValue: function(value){
+      this.listData.unshift( value );
+      this.argValue = "";
+    },
+    showDate: function(){
+      var date = new Date();
+      this.currentDate = date.getMonth() + "月" + date.getDate() + "日";
+    },
+    eventDump: function(e){
+      console.log(e);
+    },
+    eventDumpAndArg: function(str, e){
+      console.log(str);
+      console.log(e);
+    },
+    move: function(e){
+      this.boxPosition.top = ( e.offsetY - 75 )+ "px";
+      this.boxPosition.left = ( e.offsetX - 75 )+ "px";
+    }
+  }
+});
+</script>
+</body>
+</html>
