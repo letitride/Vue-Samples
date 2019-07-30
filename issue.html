@@ -88,15 +88,13 @@
   li{
     border: 1px solid rgba(27,31,35,.2);
     padding-left: 10px;
+    cursor: pointer;
   }
   li span{
     font-size: 30px;
   }
   li div{
     font-size: 15px;
-  }
-  .disp-cursor{
-    cursor: pointer;
   }
 </style>
 </head>
@@ -114,10 +112,10 @@
   </div>
   <div id="issue-box">
     <ul>
-      <li v-for="issue, key in issueList">
-      <div class="disp-cursor" v-on:click="issue.showDetail = !issue.showDetail">{{issue.title}}</div>
+      <li v-for="issue, key in issueList" v-on:click="issue.showDetail = !issue.showDetail">
+      <span>{{issue.title}}</span>
       <div v-show="issue.showDetail" style="white-space:pre-wrap; word-wrap:break-word;">{{issue.comment}}
-        <div id="del-button-area"><button v-on:click="deleteIssue(key)" class="del-butoon">Delete</div>
+        <div id="del-button-area"><button v-on:click.stop="deleteIssue(key)" class="del-butoon">Delete</div>
       </div>
     </li>
     </ul>
@@ -146,7 +144,6 @@ var app1 = new Vue({
       this.issueComment = "";
     },
     deleteIssue: function(index){
-      this.$set(this.issueList[index], "showDetail", false);
       this.issueList.splice(index, 1);
     }
   }
