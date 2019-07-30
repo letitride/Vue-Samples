@@ -57,11 +57,13 @@
   #comment-form-area{
     margin-bottom: 15px;
   }
-  #submit-button-area{
+  #add-button-area{
+    text-align: right;
+  }
+  #del-button-area{
     text-align: right;
   }
   button{
-    background-color: #28a745;
     color: #fff;
     padding: 6px 12px;
     font-size: 14px;
@@ -69,6 +71,12 @@
     border: 1px solid rgba(27,31,35,.2);
     border-radius: .25em;
     cursor: pointer;
+  }
+  .add-butoon{
+    background-color: #28a745;
+  }
+  .del-butoon{
+    background-color: #a72828;
   }
   #issue-box{
     margin-top: 20px;
@@ -80,13 +88,15 @@
   li{
     border: 1px solid rgba(27,31,35,.2);
     padding-left: 10px;
-    cursor: pointer;
   }
   li span{
     font-size: 30px;
   }
   li div{
     font-size: 15px;
+  }
+  .disp-cursor{
+    cursor: pointer;
   }
 </style>
 </head>
@@ -99,16 +109,16 @@
   <div id="comment-form-area">
     <textarea v-model.trim="issueComment" placeholder="Comment"></textarea>
   </div>
-  <div id="submit-button-area">
-  <button v-on:click="addIssue">Submit new issue</button>
+  <div id="add-button-area">
+  <button v-on:click="addIssue" class="add-butoon">Submit new issue</button>
   </div>
   <div id="issue-box">
     <ul>
-      <li v-for="issue, key in issueList"
-          v-on:click="issue.showDetail = !issue.showDetail"
-      >
-      <span>{{issue.title}}</span>
-      <div v-show="issue.showDetail" style="white-space:pre-wrap; word-wrap:break-word;">{{issue.comment}}</div>
+      <li v-for="issue, key in issueList">
+      <div class="disp-cursor" v-on:click="issue.showDetail = !issue.showDetail">{{issue.title}}</div>
+      <div v-show="issue.showDetail" style="white-space:pre-wrap; word-wrap:break-word;">{{issue.comment}}
+        <div id="del-button-area"><button v-on:click="deleteIssue(key)" class="del-butoon">Delete</div>
+      </div>
     </li>
     </ul>
   </div>
@@ -134,6 +144,10 @@ var app1 = new Vue({
       this.issueList.unshift( issue );
       this.newIssue = "";
       this.issueComment = "";
+    },
+    deleteIssue: function(index){
+      this.$set(this.issueList[index], "showDetail", false);
+      this.issueList.splice(index, 1);
     }
   }
 });
