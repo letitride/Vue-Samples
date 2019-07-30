@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+<h1>v-modelのサンプル</h1>
+<div id="app1">
+  <div>
+  <label for="bindData">入力中に同期：</label>
+  <input name="bindData" type="text" v-model="bindData">
+  </div>
+  <div>
+  <label for="lazy">入力完了時に同期：</label>
+  <input name="lazy" type="text" v-model.lazy="bindData">
+  </div>
+  <div>
+  <label for="number">変換しない：</label>
+  <input name="number" type="text" v-model="numberData">
+  </div>
+  <div>
+  <label for="number">数値型に変換：</label>
+  <input name="number" type="text" v-model.number.lazy="numberData">
+  </div>
+  <p>{{numberData + 2}}</p>
+</div>
+<div id="app2">
+  <h2>月に映画を見る回数は？</h2>
+  <input v-model.number="movie" id="none" type="radio" value="0"><label for="none"> 全く観ない</label>
+  <input v-model.number="movie" id="one" type="radio" value="1"><label for="one"> 1回</label>
+  <input v-model.number="movie" id="under5" type="radio" value="2"><label for="under5"> 5回未満</label>
+  <input v-model.number="movie" id="over5" type="radio" value="3"><label for="over5"> 5回以上</label>
+  <div>
+    <select v-model.number="movie">
+      <option value="0">全く観ない</option>
+      <option value="1">1回</option>
+      <option value="2">5回未満</option>
+      <option value="3">5回以上</option>
+    </select>
+  </div>
+  <p>{{comment}}</p>
+</div>
+<div id="app3">
+  <h2>好きな映画のジャンルは？</h2>
+  <input v-model="global" id="global" type="checkbox" true-value="洋画" false-value=""><label for="global"> 洋画</label>
+  <input v-model="japanese" id="japanese" type="checkbox" true-value="邦画" false-value=""><label for="japanese"> 邦画</label>
+  <input v-model="anime" id="anime" type="checkbox" true-value="アニメ" false-value=""><label for="anime"> アニメ</label>
+  <p>{{global}}</p>
+  <p>{{japanese}}</p>
+  <p>{{anime}}</p>
+</div>
+<div id="app4">
+  <h2>好きな映画の内容は？</h2>
+  <input v-model="categories" id="global" type="checkbox" value="恋愛"><label for="global"> 恋愛</label>
+  <input v-model="categories" id="japanese" type="checkbox" value="アクション"><label for="japanese"> アクション</label>
+  <input v-model="categories" id="anime" type="checkbox" value="コメディ"><label for="anime"> コメディ</label>
+  <select v-model="categories" multiple>
+    <option>恋愛</option>
+    <option>アクション</option>
+    <option>コメディ</option>
+  </select>
+  <p v-for="c in categories">{{c}}</p>
+</div>
+<div id="app5">
+  <template v-for="data in radioDatas">
+    <input type="radio" v-bind:id="data.id" v-bind:value="data.value" v-model="loopValue"><label v-bind:for="data.id">{{data.text}}</label>
+  </template>
+  <p>{{loopValue}}</p>
+</div>
+<script>
+var app1 = new Vue({
+  el: '#app1',
+  data: {
+    bindData: "",
+    numberData: ""
+  }
+});
+var app2 = new Vue({
+  el: '#app2',
+  data: {
+    movie: 0
+  },
+  computed: {
+    comment: function(){
+
+      var returnMsg = [
+        "たまには気分転換に映画鑑賞などいかがですか？",
+        "たまに観る映画楽しいですよね",
+        "立派な映画好きです",
+        "すごい！専門家になれるんでは！"
+      ];
+      return returnMsg[this.movie]
+    }
+  }
+});
+var app3 = new Vue({
+  el: '#app3',
+  data: {
+    global: "",
+    japanese: "邦画",
+    anime:""
+  }
+});
+var app4 = new Vue({
+  el: '#app4',
+  data: {
+    categories: ["", "アクション", ""]
+  }
+});
+var app5 = new Vue({
+  el: '#app5',
+  data: {
+    radioDatas: [
+      {value:"0", id:"i", text:"アイス"},
+      {value:"1", id:"c", text:"チョコ"},
+      {value:"2", id:"f",text:"果物"}
+    ],
+    loopValue: "1"
+  }
+});
+</script>
+</body>
+</html>
