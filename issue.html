@@ -115,7 +115,7 @@
       <li v-for="issue, key in issueList" v-on:click="issue.showDetail = !issue.showDetail">
       <span>{{issue.title}}</span>
       <div v-show="issue.showDetail" style="white-space:pre-wrap; word-wrap:break-word;">{{issue.comment}}
-        <div id="del-button-area"><button v-on:click.stop="deleteIssue(key)" class="del-butoon">Delete</div>
+        <div id="del-button-area"><button v-on:click.stop="deleteIssue(key)" class="del-butoon">Delete</button></div>
       </div>
     </li>
     </ul>
