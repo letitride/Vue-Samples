@@ -157,6 +157,21 @@ var app1 = new Vue({
       }
       return "none";
     }
+  },
+  created: function(){
+    var jsonData = localStorage.getItem("myissuemanage");
+    if(jsonData){
+      this.issueList = JSON.parse(jsonData);
+    }
+  },
+  watch:{
+    issueList: {
+      handler:function(){
+        console.log("aaaaaaaa");
+        localStorage.setItem("myissuemanage", JSON.stringify(this.issueList));
+      },
+      deep: true
+    }
   }
 });
 </script>
