@@ -113,7 +113,10 @@
   <div id="issue-box">
     <ul>
       <li v-for="issue, key in issueList" v-on:click="issue.showDetail = !issue.showDetail">
-      <span>{{issue.title}}</span>
+      <span v-bind:style="{'text-decoration':getTitleDecoration(issue.currentStatus)}">{{issue.title}}</span>
+      <select v-model="issue.currentStatus" v-on:click.stop="">
+        <option v-for="value in statusList">{{value}}</option>
+      </select>
       <div v-show="issue.showDetail" style="white-space:pre-wrap; word-wrap:break-word;">{{issue.comment}}
         <div id="del-button-area"><button v-on:click.stop="deleteIssue(key)" class="del-butoon">Delete</button></div>
       </div>
@@ -125,6 +128,7 @@
 var app1 = new Vue({
   el: '#app1',
   data: {
+    statusList: ["new", "assigned", "closed"],
     newIssue: "",
     issueComment: "",
     issueList: []
@@ -137,7 +141,8 @@ var app1 = new Vue({
       var issue = {
         title: this.newIssue,
         comment: this.issueComment,
-        showDetail: false
+        showDetail: false,
+        currentStatus: "new"
       }
       this.issueList.unshift( issue );
       this.newIssue = "";
@@ -145,6 +150,12 @@ var app1 = new Vue({
     },
     deleteIssue: function(index){
       this.issueList.splice(index, 1);
+    },
+    getTitleDecoration: function(status){
+      if( status == "closed"){
+        return "line-through";
+      }
+      return "none";
     }
   }
 });
