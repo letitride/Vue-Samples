@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+        animation: myAnime 4s;
+      }
+      @keyframes myAnime{
+        50% {
+          transform: translateX(200px);
+          background: yellow;
+        }
+        100%{
+          transform: translateX(400px) rotate(180deg);
+          background: green;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>キーフレームアニメーション</h1>
+    <div class="box"></div>
+  </body>
+</html>
