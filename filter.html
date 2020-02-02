@@ -8,6 +8,10 @@
   <body>
     <div id="app">
       <p>今日は{{ date | jaDay }}</p>
+      <p>来年の今日は{{ date| nextYear| jaDay }}</p>
+      <label for="num">数値:</label>
+      <input name="num" type="number" v-model.number="num" />
+      <p>{{num | addComma("円")}}</p>
     </div>
     <script src="js/component.js"></script> 
   </body>
