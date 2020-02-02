@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue TEST</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+<h1>canvasのサンプル</h1>
+<div id="app1">
+  色:<label><input type="radio" value="black" v-model="color">黒</label>
+  <label><input type="radio" value="red" v-model="color">赤</label>
+  <label><input type="radio" value="yellow" v-model="color">黄</label>
+  <label><input type="radio" value="green" v-model="color">緑</label>
+  <label for="width">線幅</label>
+  <select v-model="width">
+    <option v-for="num in [1,2,3,4,5,6,7,8,9]">{{num}}</option>
+  </select>
+  <button @click="clearAll()">すべて消去</button>
+  <button @click="undo()">一つ前の線を消去</button>
+  <button @click="redraw()">選択色で再描画</button>
+  <br />
+  <canvas
+    ref="myCanvas" width="600" height="400"
+    @mousedown="mousedown" @mousemove="mousemove" @mouseup="mouseup">
+  </canvas>
+</div>
+
+<script>
+class Line{
+  constructor(points, color, width){
+    this.width = width;
+    this.points = points;
+    this.color = color;
+  }
+}
+
+class Point{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+  }
+}
+
+function drawLine(ctx, begin, end, line){
+  ctx.strokeStyle = line.color;
+  ctx.lineWidth = line.width;
+  ctx.beginPath();
+  ctx.moveTo( begin.x, begin.y );
+  ctx.lineTo( end.x, end.y );
+  ctx.stroke();
+  ctx.closePath();
+}
+
+function drawLines(ctx, lines, color=null){
+  for( i=0;i<lines.length;i++ ){
+    var line = lines[i];
+    if(color != null){
+      line.color = color;
+    }
+    for( j=0;j<line.points.length-1;j++){
+      begin = line.points[j];
+      end = line.points[j + 1];
+      drawLine(ctx, begin, end, line);
+    }
+  }
+}
+
+var draw = new Vue({
+  el: '#app1',
+  data: {
+    line: null,
+    lines: [],
+    color: "black",
+    width: 4,
+    canvas: "",
+    isDrawing: false,
+    drawPoints: []
+  },
+  methods:{
+    mousedown: function( event ){
+      console.log("mousedown");
+      this.isDrawing = true;
+      this.drawPoints = [ new Point(event.offsetX, event.offsetY ) ];
+      //ドラッグ中カレントのライン
+      this.line = new Line( this.drawPoints, this.color, this.width );
+      //ライン描画の履歴
+      this.lines.push( this.line );
+    },
+    mousemove: function(){
+      if( this.isDrawing == false ){ return; }
+      console.log("drawing");
+
+      var beginPoint = this.line.points[this.line.points.length-1];
+      //終点は現在のカーソル位置
+      var endPoint = new Point( event.offsetX, event.offsetY );
+
+      var ctx = this.canvas.getContext("2d");
+      drawLine( ctx, beginPoint, endPoint, this.line );
+      ctx.closePath();
+      this.line.points.push( endPoint );
+    },
+    mouseup: function( event ){
+      console.log("mouseup");
+      this.isDrawing = false;
+    },
+    clearAll: function(){
+      this.lines = [];
+      var ctx = this.canvas.getContext("2d");
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    undo:function(){
+      if( this.lines.length == 0){return;}
+      //最後の線を削除
+      this.lines.pop();
+      var ctx = this.canvas.getContext("2d");
+      //一旦キャンバスをclearAll
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      drawLines( ctx, this.lines );
+    },
+    redraw: function(){
+      if(this.lines.length == 0){return;}
+      //一旦キャンバスをclearAll
+      var ctx = this.canvas.getContext("2d");
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      drawLines( ctx, this.lines, this.color );
+    }
+  },
+  //$refsに直接アクセスしてもリアクティブにならない
+  mounted: function(){
+    this.canvas = this.$refs.myCanvas;
+  }
+});
+</script>
+</body>
+</html>
