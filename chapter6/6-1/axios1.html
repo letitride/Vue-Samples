@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+  </head>
+  <body>
+    <div id="app">
+      <p>学生番号:{{student.number}}</p>
+      <p>名前:{{student.name}}</p>
+      <ul>
+        <li v-for="score in student.scores">{{score}}</li>
+      </ul>
+    </div>
+    <script src="axios1.js"></script> 
+  </body>
+</html>
