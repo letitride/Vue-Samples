@@ -1,0 +1,25 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "逆引きPython標準ライブラリ",
+      "price": 3240,
+      "stock": 5,
+      "author": "田中一郎"
+    },
+    {
+      "id": 2,
+      "name": "楽しく学ぶJava",
+      "price": 2970,
+      "stock": 10,
+      "author": "大津真"
+    },
+    {
+      "id": 3,
+      "name": "6日間で楽しく学ぶLinuxコマンドライン入門",
+      "price": 3000,
+      "stock": 0,
+      "author": "猫山虎之助"
+    }
+  ]
+}

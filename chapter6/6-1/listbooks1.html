@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      .soldout{
+        color: gray;
+        text-decoration: line-through;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+  </head>
+  <body>
+    <div id="app">
+      <table class="table">
+        <th>製品名</th>
+        <th>著者</th>
+        <th @click="reverseOrder">価格 {{orderIcon}}</th>
+        <th>残り</th>
+        <tr
+          v-for="item in sortedItems"
+          v-bind:key="item.id"
+          v-bind:class="{soldout: item.stock == 0}"
+          >
+        <td>{{item.name}}</td>
+        <td>{{item.author}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.stock}}</td>
+      </tr>
+      </table>
+    </div>
+    <script src="listbooks1.js"></script> 
+  </body>
+</html>
